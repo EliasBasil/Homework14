@@ -2,7 +2,7 @@ package org.skypro.skyshop;
 
 public class App {
     public static void main(String[] args) {
-        ProductBasket basket = new ProductBasket();
+        ProductBasket basket = new ProductBasket(5);
         Product cheese = new Product("сыр", 100);
         Product potatoes = new Product("картофель", 250);
         Product eggs = new Product("яйца", 70);
