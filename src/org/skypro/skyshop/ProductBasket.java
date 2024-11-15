@@ -1,14 +1,21 @@
 package org.skypro.skyshop;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class ProductBasket {
-    private final Product[] basket = new Product[5];
+    private final int basketSize;
+    private final Product[] basket;
     private int pointer = 0;
 
 
+    public ProductBasket(int basketSize) {
+        this.basketSize = basketSize;
+        basket = new Product[basketSize];
+    }
+
     public void addProduct(Product product) {
-        if (pointer == 5) {
+        if (pointer == basketSize) {
             System.out.println("Невозможно добавить продукт");
         } else {
             basket[pointer++] = product;
@@ -53,21 +60,23 @@ public class ProductBasket {
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(basket);
+        int result = Objects.hash(basketSize, pointer);
+        result = 31 * result + Arrays.hashCode(basket);
+        return result;
     }
 
     @Override
     public String toString() {
         if (pointer == 0) {
             return "в корзине пусто";
-        } else {
-            StringBuilder result = new StringBuilder();
-            for (int i = 0; i < pointer; i++) {
-                result.append(basket[i].toString()).append("\n");
-            }
-            result.append("Итого: ").append(getTotalValue());
-            return result.toString();
         }
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < pointer; i++) {
+            result.append(basket[i].toString()).append("\n");
+        }
+        result.append("Итого: ").append(getTotalValue());
+        return result.toString();
+
     }
 }
 
