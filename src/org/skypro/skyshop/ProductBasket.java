@@ -8,7 +8,6 @@ public class ProductBasket {
     private final Product[] basket;
     private int pointer = 0;
 
-
     public ProductBasket(int basketSize) {
         this.basketSize = basketSize;
         basket = new Product[basketSize];
@@ -22,8 +21,8 @@ public class ProductBasket {
         }
     }
 
-    public int getTotalValue() {
-        int sum = 0;
+    public double getTotalValue() {
+        double sum = 0;
         for (int i = 0; i < pointer; i++) {
             sum += basket[i].getProductPrice();
         }
@@ -70,13 +69,17 @@ public class ProductBasket {
         if (pointer == 0) {
             return "в корзине пусто";
         }
+        int specialProducts = 0;
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < pointer; i++) {
             result.append(basket[i].toString()).append("\n");
+            if (basket[i].isSpecial()) {
+                specialProducts++;
+            }
         }
         result.append("Итого: ").append(getTotalValue());
+        result.append("\nСпециальных товаров: ").append(specialProducts);
         return result.toString();
-
     }
 }
 

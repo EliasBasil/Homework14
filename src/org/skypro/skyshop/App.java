@@ -3,12 +3,12 @@ package org.skypro.skyshop;
 public class App {
     public static void main(String[] args) {
         ProductBasket basket = new ProductBasket(5);
-        Product cheese = new Product("сыр", 100);
-        Product potatoes = new Product("картофель", 250);
-        Product eggs = new Product("яйца", 70);
-        Product milk = new Product("молоко", 40);
-        Product chicken = new Product("курица", 300);
-        Product tomatoes = new Product("помидоры", 140);
+        Product cheese = new SimpleProduct("сыр", 100);
+        Product potatoes = new DiscountedProduct("картофель", 250, 20);
+        Product eggs = new DiscountedProduct("яйца", 70, 50);
+        Product milk = new FixPriceProduct("молоко");
+        Product chicken = new SimpleProduct("курица", 300);
+        Product tomatoes = new SimpleProduct("помидоры", 140);
 
         basket.addProduct(cheese);
         basket.addProduct(potatoes);
