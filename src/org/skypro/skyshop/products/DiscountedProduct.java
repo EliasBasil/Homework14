@@ -1,4 +1,6 @@
-package org.skypro.skyshop;
+package org.skypro.skyshop.products;
+
+import java.util.Objects;
 
 public class DiscountedProduct extends Product {
     private final double basePrice;
@@ -8,6 +10,11 @@ public class DiscountedProduct extends Product {
         super(productName);
         this.basePrice = basePrice;
         this.discount = discount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(basePrice, discount);
     }
 
     @Override
@@ -28,4 +35,6 @@ public class DiscountedProduct extends Product {
     public String toString() {
         return getProductName() + ": " + getProductPrice() + " (" + getDiscount() + "%)";
     }
+
+
 }
