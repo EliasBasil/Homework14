@@ -1,6 +1,7 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.articles.Article;
+import org.skypro.skyshop.exceptions.BestResultNotFound;
 import org.skypro.skyshop.products.*;
 
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.Arrays;
 public class App {
     public static void main(String[] args) {
         ProductBasket basket = new ProductBasket(5);
+
         Product cheese = new SimpleProduct("сыр", 100);
         Product potatoes = new DiscountedProduct("картофель", 250, 20);
         Product eggs = new DiscountedProduct("яйца", 70, 50);
@@ -63,5 +65,54 @@ public class App {
         System.out.println(Arrays.toString(engine.search("помидор")));
         System.out.println();
         System.out.println(Arrays.toString(engine.search("молоко")));
+        System.out.println();
+
+        try {
+            Product wrongPriceProduct = new SimpleProduct("оливки", -50);
+            System.out.println(wrongPriceProduct);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product wrongNameProduct = new SimpleProduct("   ", 50);
+            System.out.println(wrongNameProduct);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Product wrongDiscountProduct = new DiscountedProduct("оливки", 50, -2);
+            System.out.println(wrongDiscountProduct);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println();
+
+        try {
+            System.out.println(engine.findBestResult("сыр"));
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            System.out.println(engine.findBestResult("помидор"));
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println();
+
+        try {
+            System.out.println(engine.findBestResult("молоко"));
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            System.out.println(engine.findBestResult("фейхоа"));
+            System.out.println();
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
