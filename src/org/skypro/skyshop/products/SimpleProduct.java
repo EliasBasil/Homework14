@@ -1,4 +1,4 @@
-package org.skypro.skyshop;
+package org.skypro.skyshop.products;
 
 public class SimpleProduct extends Product {
     private final double productPrice;
@@ -22,4 +22,6 @@ public class SimpleProduct extends Product {
     public String toString() {
         return getProductName() + ": " + getProductPrice();
     }
+
+
 }
