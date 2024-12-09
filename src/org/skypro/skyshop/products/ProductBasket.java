@@ -1,30 +1,35 @@
 package org.skypro.skyshop.products;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 public class ProductBasket {
-    private final int basketSize;
-    private final Product[] basket;
-    private int pointer = 0;
+    private LinkedList<Product> basket;
 
-    public ProductBasket(int basketSize) {
-        this.basketSize = basketSize;
-        basket = new Product[basketSize];
+    public ProductBasket() {
+        basket = new LinkedList<>();
     }
 
     public void addProduct(Product product) {
-        if (pointer == basketSize) {
-            System.out.println("Невозможно добавить продукт");
-        } else {
-            basket[pointer++] = product;
+        basket.add(product);
+    }
+
+    public ArrayList<Product> removeProduct(String productName) {
+        ArrayList<Product> result = new ArrayList<>();
+        Iterator<Product> iterator = basket.iterator();
+        while (iterator.hasNext()) {
+            Product element = iterator.next();
+            if (element.getProductName().equals(productName)) {
+                result.add(element);
+                iterator.remove();
+            }
         }
+        return result;
     }
 
     public double getTotalValue() {
         double sum = 0;
-        for (int i = 0; i < pointer; i++) {
-            sum += basket[i].getProductPrice();
+        for (Product product : basket) {
+            sum += product.getProductPrice();
         }
         return sum;
     }
@@ -34,8 +39,8 @@ public class ProductBasket {
     }
 
     public boolean containsProduct(String productName) {
-        for (int i = 0; i < pointer; i++) {
-            if (basket[i].getProductName().equals(productName)) {
+        for (Product product : basket) {
+            if (product.getProductName().equals(productName)) {
                 return true;
             }
         }
@@ -43,37 +48,31 @@ public class ProductBasket {
     }
 
     public void clearAll() {
-        for (int i = 0; i < pointer; i++) {
-            basket[i] = null;
-        }
-        pointer = 0;
+        basket = new LinkedList<>();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductBasket basket1 = (ProductBasket) o;
-        return Arrays.equals(basket, basket1.basket);
+        if (!(o instanceof ProductBasket that)) return false;
+        return Objects.equals(basket, that.basket);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(basketSize, pointer);
-        result = 31 * result + Arrays.hashCode(basket);
-        return result;
+        return Objects.hash(basket);
     }
 
     @Override
     public String toString() {
-        if (pointer == 0) {
+        if (basket.isEmpty()) {
             return "в корзине пусто";
         }
         int specialProducts = 0;
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < pointer; i++) {
-            result.append(basket[i].toString()).append("\n");
-            if (basket[i].isSpecial()) {
+        for (Product product : basket) {
+            result.append(product.toString()).append("\n");
+            if (product.isSpecial()) {
                 specialProducts++;
             }
         }
