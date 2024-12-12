@@ -52,18 +52,6 @@ public class ProductBasket {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProductBasket that)) return false;
-        return Objects.equals(basket, that.basket);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(basket);
-    }
-
-    @Override
     public String toString() {
         if (basket.isEmpty()) {
             return "в корзине пусто";
