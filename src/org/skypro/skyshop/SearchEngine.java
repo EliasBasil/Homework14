@@ -4,19 +4,20 @@ import org.skypro.skyshop.exceptions.BestResultNotFound;
 import org.skypro.skyshop.interfaces.Searchable;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class SearchEngine {
     private final ArrayList<Searchable> items;
 
-    public SearchEngine(int size) {
-        this.items = new ArrayList<>(size);
+    public SearchEngine() {
+        this.items = new ArrayList<>();
     }
 
-    public ArrayList<Searchable> search(String searchQuery) {
-        ArrayList<Searchable> result = new ArrayList<>();
+    public TreeMap<String, Searchable> search(String searchQuery) {
+        TreeMap<String, Searchable> result = new TreeMap<>();
         for (Searchable item : items) {
             if (item != null && item.getSearchTerm().toLowerCase().contains(searchQuery.toLowerCase())) {
-                result.add(item);
+                result.put(item.getSearchTerm(), item);
             }
         }
         return result;

@@ -2,9 +2,12 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.articles.Article;
 import org.skypro.skyshop.exceptions.BestResultNotFound;
+import org.skypro.skyshop.interfaces.Searchable;
 import org.skypro.skyshop.products.*;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class App {
     public static void main(String[] args) {
@@ -60,7 +63,7 @@ public class App {
         Article tomatoArticle = new Article("Статья про помидоры", "Они еще вкуснее, чем эти моцареллы и бри");
         Article milkArticle = new Article("Статья про молоко", "Я просто статья про молоко");
 
-        SearchEngine engine = new SearchEngine(10);
+        SearchEngine engine = new SearchEngine();
         engine.add(cheese);
         engine.add(potatoes);
         engine.add(eggs);
@@ -72,11 +75,20 @@ public class App {
         engine.add(tomatoArticle);
         engine.add(milkArticle);
 
-        System.out.println(engine.search("сыр"));
+        TreeMap<String, Searchable> searchResult = engine.search("сыр");
+        for (Map.Entry<String, Searchable> entry : searchResult.entrySet()) {
+            System.out.println(entry.getKey() + ":\n" + entry.getValue());
+        }
         System.out.println();
-        System.out.println(engine.search("помидор"));
+        searchResult = engine.search("помидор");
+        for (Map.Entry<String, Searchable> entry : searchResult.entrySet()) {
+            System.out.println(entry.getKey() + ":\n" + entry.getValue());
+        }
         System.out.println();
-        System.out.println(engine.search("молоко"));
+        searchResult = engine.search("молоко");
+        for (Map.Entry<String, Searchable> entry : searchResult.entrySet()) {
+            System.out.println(entry.getKey() + ":\n" + entry.getValue());
+        }
         System.out.println();
 
         try {
