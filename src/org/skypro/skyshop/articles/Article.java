@@ -12,7 +12,7 @@ public class Article implements Searchable {
     }
 
     public String getSearchTerm() {
-        return toString();
+        return name;
     }
 
     public String getContentType() {
