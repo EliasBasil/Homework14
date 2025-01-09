@@ -29,13 +29,10 @@ public class ProductBasket {
     }
 
     public double getTotalValue() {
-        double sum = 0;
-        for (Map.Entry<String, ArrayList<Product>> entry : basket.entrySet()) {
-            for (Product product : entry.getValue()) {
-                sum += product.getProductPrice();
-            }
-        }
-        return sum;
+        return basket.values().stream()
+                .flatMap(Collection::stream)
+                .mapToDouble(Product::getProductPrice)
+                .sum();
     }
 
     public void printBasket() {
@@ -55,19 +52,20 @@ public class ProductBasket {
         if (basket.isEmpty()) {
             return "в корзине пусто";
         }
-        int specialProducts = 0;
         StringBuilder result = new StringBuilder();
-        for (Map.Entry<String, ArrayList<Product>> entry : basket.entrySet()) {
-            for (Product product : entry.getValue()) {
-                result.append(product.toString()).append("\n");
-                if (product.isSpecial()) {
-                    specialProducts++;
-                }
-            }
-        }
+        basket.values().stream()
+                .flatMap(Collection::stream)
+                .forEach(p -> result.append(p.toString()).append("\n"));
         result.append("Итого: ").append(getTotalValue());
-        result.append("\nСпециальных товаров: ").append(specialProducts);
+        result.append("\nСпециальных товаров: ").append(getSpecialCount());
         return result.toString();
+    }
+
+    private int getSpecialCount() {
+        return (int) basket.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 }
 
