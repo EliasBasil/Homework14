@@ -2,12 +2,11 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.articles.Article;
 import org.skypro.skyshop.exceptions.BestResultNotFound;
-import org.skypro.skyshop.interfaces.Searchable;
+import org.skypro.skyshop.utilities.Searchable;
 import org.skypro.skyshop.products.*;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class App {
     public static void main(String[] args) {
@@ -59,7 +58,8 @@ public class App {
 
         Article cheeseArticle = new Article("Статья про сыр", "Сыр - это очень вкусно");
         Article badCheeseArticle = new Article("Опровержение!", "Сыр - это ужасно");
-        Article anotherCheeseArticle = new Article("Еще одна статья про сыр", "Добавьте к нему помидоры");
+        Article anotherCheeseArticle = new Article("Это - статья про сыр №2", "Больше сыра богу сыра");
+        Article yetAnotherCheeseArticle = new Article("Еще одна статья про сыр", "Добавьте к нему помидоры");
         Article tomatoArticle = new Article("Статья про помидоры", "Они еще вкуснее, чем эти моцареллы и бри");
         Article milkArticle = new Article("Статья про молоко", "Я просто статья про молоко");
 
@@ -72,22 +72,23 @@ public class App {
         engine.add(cheeseArticle);
         engine.add(badCheeseArticle);
         engine.add(anotherCheeseArticle);
+        engine.add(yetAnotherCheeseArticle);
         engine.add(tomatoArticle);
         engine.add(milkArticle);
 
-        TreeMap<String, Searchable> searchResult = engine.search("сыр");
-        for (Map.Entry<String, Searchable> entry : searchResult.entrySet()) {
-            System.out.println(entry.getKey() + ":\n" + entry.getValue());
+        TreeSet<Searchable> searchResult = engine.search("сыр");
+        for (Searchable searchable : searchResult) {
+            System.out.println(searchable);
         }
         System.out.println();
         searchResult = engine.search("помидор");
-        for (Map.Entry<String, Searchable> entry : searchResult.entrySet()) {
-            System.out.println(entry.getKey() + ":\n" + entry.getValue());
+        for (Searchable searchable : searchResult) {
+            System.out.println(searchable);
         }
         System.out.println();
         searchResult = engine.search("молоко");
-        for (Map.Entry<String, Searchable> entry : searchResult.entrySet()) {
-            System.out.println(entry.getKey() + ":\n" + entry.getValue());
+        for (Searchable searchable : searchResult) {
+            System.out.println(searchable);
         }
         System.out.println();
 
