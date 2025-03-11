@@ -6,7 +6,7 @@ import org.skypro.skyshop.utilities.Searchable;
 import org.skypro.skyshop.products.*;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
@@ -76,7 +76,7 @@ public class App {
         engine.add(tomatoArticle);
         engine.add(milkArticle);
 
-        TreeSet<Searchable> searchResult = engine.search("сыр");
+        Set<Searchable> searchResult = engine.search("сыр");
         for (Searchable searchable : searchResult) {
             System.out.println(searchable);
         }

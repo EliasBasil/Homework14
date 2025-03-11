@@ -5,23 +5,21 @@ import org.skypro.skyshop.utilities.SearchEngineComparator;
 import org.skypro.skyshop.utilities.Searchable;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
-    private final HashSet<Searchable> items;
+    private final Set<Searchable> items;
 
     public SearchEngine() {
         this.items = new HashSet<>();
     }
 
-    public TreeSet<Searchable> search(String searchQuery) {
-        TreeSet<Searchable> result = new TreeSet<>(new SearchEngineComparator());
-        for (Searchable item : items) {
-            if (item != null && item.getSearchTerm().toLowerCase().contains(searchQuery.toLowerCase())) {
-                result.add(item);
-            }
-        }
-        return result;
+    public Set<Searchable> search(String searchQuery) {
+        return items.stream()
+                .filter(p -> p.getSearchTerm().toLowerCase().contains(searchQuery.toLowerCase()))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new SearchEngineComparator())));
     }
 
     public Searchable findBestResult(String search) throws BestResultNotFound {
